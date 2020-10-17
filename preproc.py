@@ -3,57 +3,62 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-txt_file = open("ScreenRecorderPath.txt", "r+")
+def extract_data(log_path="ScreenRecorderPath.txt"):
 
-eye_x = np.empty(1)
-eye_y = np.empty(1)
+	txt_file = open(log_path, "r+")
 
-timestamp = np.empty(1)
+	gaze_df = pd.DataFrame(columns = ["gaze_x", "gaze_y", "timestamp", "mouse_x", "mouse_y", "is_theme_changed"])
 
-mouse_x = np.empty(1)
-mouse_y = np.empty(1)
+	theme_change_prev = 0
 
-idx = np.empty(1)
-theme_change = 0
-theme_change_idx = np.empty(1)
+	for line in txt_file.readlines():
 
-for line in txt_file.readlines():
-
-	print(line)
-	if "ImageFile:" in line:
-		print("Reading a file started. ")
-	else:
-
-		splited = line.split(" ")
-		
-		eye_x = np.append(eye_x, float(splited[0]))
-		eye_y = np.append(eye_y, float(splited[1]))
-		
-		timestamp = np.append(timestamp, int(splited[2]))
-
-		mouse_x = np.append(mouse_x, float(splited[4]))
-		mouse_y = np.append(mouse_y, float(splited[5]))
-		
-		idx = np.append(idx, int(sptiled[6]))
-		
-		if int(splited[7]) is not(theme_change):
-			theme_change_idx = np.append(theme_change_idx, 1)
-			theme_change = not(theme_change)
+		print(line)
+		if "ImageFile:" in line:
+			print("Extracting data from file started. ")
 		else:
-			theme_change_idx = np.append(theme_change_idx, 0)
-			theme_change = theme_change
 
-print(np.size(eye_x))
-print(eye_x)
+			splited = line.split(" ")
+			
+			eye_x = float(splited[0])
+			eye_y = -(float(splited[1]))+1
+			
+			timestamp = int(splited[2])
 
-eye_y = -(eye_y)
+			mouse_x = float(splited[4])
+			mouse_y = float(splited[5])
+			
+			theme_change = int(splited[7])
+			
+			if theme_change is not(theme_change_prev):
+				is_theme_change = True
+				theme_change_prev = theme_change
+			else:
+				is_theme_change = False
+				theme_change_prev = theme_change
 
-eyes = np.vstack((eye_x[1:], eye_y[1:]))
-df_eyes = pd.DataFrame.from_records(eyes.T, columns = ["eye_x", "eye_y"])
+			gaze_df = gaze_df.append({"gaze_x": eye_x, "gaze_y": eye_y, "timestamp": timestamp, "mouse_x": mouse_x, "mouse_y": mouse_y, "is_theme_changed": is_theme_change}, ignore_index = True)
 
-print(df_eyes.count())
-df_eyes.plot.scatter(x="eye_x", y="eye_y")
-plt.show()
-#sns.set_theme()
-#sns.scatterplot(data=eyes)
-#plt.show()
+	print("DataFrame contents: \n", gaze_df, "sep=\n")
+	
+	print(gaze_df.count())
+	
+	gaze_df.plot.scatter(x = "gaze_x", y = "gaze_y")
+	plt.show()
+	
+	gaze_df.drop(gaze_df[gaze_df["gaze_x"] > 1].index, inplace=True)
+	gaze_df.drop(gaze_df[gaze_df["gaze_y"] > 1].index, inplace=True)
+	gaze_df.drop(gaze_df[gaze_df["gaze_x"] < 0].index, inplace=True)
+	gaze_df.drop(gaze_df[gaze_df["gaze_y"] < 0].index, inplace=True)
+	
+	gaze_df.reset_index()
+	
+	print(gaze_df.count())
+	
+	gaze_df.plot.scatter(x = "gaze_x", y = "gaze_y")
+	plt.show()
+	
+	return gaze_df
+	
+if __name__ == "__main__":
+	extract_data()

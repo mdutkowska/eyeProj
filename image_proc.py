@@ -1,36 +1,38 @@
-import cv2
+import cv2 
 
-x1, x2, y1, y2 = 0, 0, 0, 0
 
-img = cv2.imread("plamy.jpg")
+img = cv2.imread("plamy.jpg") 
 
-def draw_rect(event, x, y, flags, param):
+# variables 
+ix = -1
+iy = -1
+drawing = False
 
-	global ix, iy, drawing, img
+def draw_rectangle_with_drag(event, x, y, flags, param): 
 	
-	if event == cv2.EVENT_LBUTTONDOWN:
-		print("CLICK")
+	global ix, iy, drawing, img 
+	
+	if event == cv2.EVENT_LBUTTONDOWN: 
 		drawing = True
-		ix = x
-		iy = y
-		
-	elif event == cv2.EVENT_MOUSEMOVE:
-		if drawing == True:
-			cv2.rectangle(img, pt1=(ix, yx), 
-					pt = (x, y), color =(255, 0, 0), thickness =-1)
-			
-	elif event == cv2.EVENT_LBUTTONUP:
-		drawing ==False
-		cv2.rectangle(img, pt1 =(ix, iy), 
-				pt2 =(x, y), color =(255, 0, 0), thickness =-1)
-		
-cv2.namedWindow(winname = "Mark points. ")
-cv2.setMouseCallback("Mark points, ", draw_rect)
-
-while True:
-	cv2.imshow("Mark points. ", img)
+		ix = x 
+		iy = y			 
 	
-	if cv2.waitKey(0) == 27:
+	elif event == cv2.EVENT_LBUTTONUP: 
+		drawing = False
+		cv2.rectangle(img, pt1 =(ix, iy), 
+					pt2 =(x, y), 
+					color =(0, 0, 0), 
+					thickness =10) 
+		
+cv2.namedWindow(winname = "Title of Popup Window") 
+cv2.setMouseCallback("Title of Popup Window", 
+					draw_rectangle_with_drag) 
+
+while True: 
+	cv2.imshow("Title of Popup Window", img) 
+	
+	if cv2.waitKey(10) == 27: 
 		break
 
-cv2.destroyAllWindows()
+cv2.destroyAllWindows() 
+
