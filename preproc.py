@@ -43,20 +43,22 @@ def extract_data(log_path="ScreenRecorderPath.txt"):
 	
 	print(gaze_df.count())
 	
-	gaze_df.plot.scatter(x = "gaze_x", y = "gaze_y")
-	plt.show()
+	#gaze_df.plot.scatter(x = "gaze_x", y = "gaze_y")
+	#plt.show()
 	
 	gaze_df.drop(gaze_df[gaze_df["gaze_x"] > 1].index, inplace=True)
 	gaze_df.drop(gaze_df[gaze_df["gaze_y"] > 1].index, inplace=True)
 	gaze_df.drop(gaze_df[gaze_df["gaze_x"] < 0].index, inplace=True)
 	gaze_df.drop(gaze_df[gaze_df["gaze_y"] < 0].index, inplace=True)
 	
-	gaze_df.reset_index()
+	gaze_df = gaze_df.reset_index()
 	
 	print(gaze_df.count())
 	
-	gaze_df.plot.scatter(x = "gaze_x", y = "gaze_y")
-	plt.show()
+	#gaze_df.plot.scatter(x = "gaze_x", y = "gaze_y")
+	#plt.show()
+	
+	print("Extracting data finished. ")
 	
 	return gaze_df
 	
