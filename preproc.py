@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def extract_data(log_path="ScreenRecorderPath.txt"):
+def preproc(log_path="ScreenRecorderPath.txt"):
 
 	txt_file = open(log_path, "r+")
 

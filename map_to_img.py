@@ -5,13 +5,8 @@ import preproc as pp
 res_x = 1366
 res_y = 768
 
-
 #PODZIELIC NA DWIE FUNKCJE
-def map_to_img(res_x = 1366, res_y = 768):
-
-	img = cv2.imread("plamy.jpg")
-
-	gaze_df = pp.extract_data()
+def map_to_img(img, gaze_df, res_x = 1366, res_y = 768):
 	
 	gaze_x = gaze_df["gaze_x"]*res_x
 	gaze_y = gaze_df["gaze_y"]*res_y
@@ -30,8 +25,8 @@ def map_to_img(res_x = 1366, res_y = 768):
 		cv2.line(img, (coord_x_prev, coord_y_prev), (coord_x, coord_y), (0, 0, 0), 2)
 		coord_x_prev, coord_y_prev = coord_x, coord_y
 		
-	cv2.namedWindow(winname = "Title of Popup Window") 
-	cv2.imshow("Title of Popup Window", img)
+	#cv2.namedWindow(winname = "Title of Popup Window") 
+	#cv2.imshow("Title of Popup Window", img)
 
 	return pixels_coord
 	
