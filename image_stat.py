@@ -4,6 +4,7 @@ import numpy as np
 thr_y = [0, 465, 920, 1366]
 thr_x = [0, 400, 768]
 
+
 def neighborhood(iterable):
     iterator = iter(iterable)
     prev_item = None
@@ -15,17 +16,23 @@ def neighborhood(iterable):
     yield (prev_item, current_item, None)
 
 class verification_area:
-	def __init__(self, up, down, right, left):
+	def __init__(self, up, down, left, right):
 		self.up=up
 		self.down=down
-		self.right=right
 		self.left=left
-	#TODO
-	def is_in_area():
-		pass
-		
+		self.right=right
+	
+	def is_in_area(self, x, y):
+	
+		x = int(x)
+		y = int(y)
+		if (y in range(self.left, self.right)) and (y in range(self.left, self.right)):
+			return True
+		else:
+			return False
+			
 areas_number = (len(thr_y)-1)*(len(thr_x)-1)
-areas_array = np.empty([areas_number], dtype = verification_area)
+areas_array = np.empty([areas_number], dtype = verification_area)			
 
 #TODO PARAMETRIZE THAT
 def image_stat(img, thr_y1 = thr_y[1], thr_y2 = thr_y[2], thr_x1 = thr_x[1]):
@@ -61,21 +68,21 @@ def image_stat(img, thr_y1 = thr_y[1], thr_y2 = thr_y[2], thr_x1 = thr_x[1]):
 def create_verification_areas(thr_y = thr_y, thr_x = thr_x):
 
 	i = 0
-	#TODO
-	for prev_y, boundry_y, next_y in neighborhood(thr_y):
-		for prev_x, boundry_x, next_x in neighborhood(thr_x):
+	for boundry_x in range(len(thr_x)-1):
+		for boundry_y in range(len(thr_y)-1):
 			if i < areas_number:
-				print(boundry_x)
-				areas_array[i] = verification_area(prev_x, boundry_x, prev_y, boundry_y)
+				areas_array[i] = verification_area(up = thr_x[boundry_x], down = thr_x[boundry_x+1], left = thr_y[boundry_y], right = thr_y[boundry_y+1])
 				i = i + 1
-		
-
+	
 if __name__ == "__main__":
 	
 	create_verification_areas()
 	
 	print(areas_array[0].__dict__)
 	print(areas_array[1].__dict__)
+	print(areas_array[2].__dict__)
+	print(areas_array[3].__dict__)
+	print(areas_array[4].__dict__)
 	print(areas_array[5].__dict__)
 	
 	k = cv2.waitKey(0)

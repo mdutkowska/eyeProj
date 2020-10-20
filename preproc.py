@@ -39,10 +39,6 @@ def preproc(log_path="ScreenRecorderPath.txt"):
 
 			gaze_df = gaze_df.append({"gaze_x": eye_x, "gaze_y": eye_y, "timestamp": timestamp, "mouse_x": mouse_x, "mouse_y": mouse_y, "is_theme_changed": is_theme_change}, ignore_index = True)
 
-	print("DataFrame contents: \n", gaze_df, "sep=\n")
-	
-	print(gaze_df.count())
-	
 	#gaze_df.plot.scatter(x = "gaze_x", y = "gaze_y")
 	#plt.show()
 	
@@ -53,14 +49,15 @@ def preproc(log_path="ScreenRecorderPath.txt"):
 	
 	gaze_df = gaze_df.reset_index()
 	
-	print(gaze_df.count())
 	
 	#gaze_df.plot.scatter(x = "gaze_x", y = "gaze_y")
 	#plt.show()
 	
 	print("Extracting data finished. ")
 	
+	print(gaze_df.head())
+	
 	return gaze_df
 	
 if __name__ == "__main__":
-	extract_data()
+	preproc()
