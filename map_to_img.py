@@ -18,17 +18,17 @@ def map_to_img(img, gaze_df, res_x = 1366, res_y = 768):
 	coord_x, coord_y = int(gaze_x[0]), int(gaze_y[0])	
 	coord_x_prev, coord_y_prev = coord_x, coord_y
 	
-	cv2.circle(img, (coord_x, coord_y), 3, (0, 0, 0), -1)
+	#cv2.circle(img, (coord_x, coord_y), 3, (0, 0, 0), -1)
 		
 	for coord in range(1, len(gaze_df.index)):
 		coord_x, coord_y = int(gaze_x[coord]), int(gaze_y[coord])
-		cv2.line(img, (coord_x_prev, coord_y_prev), (coord_x, coord_y), (0, 0, 0), 2)
-		cv2.circle(img, (coord_x, coord_y), 3, (0, 0, 0), -1)
+		#cv2.line(img, (coord_x_prev, coord_y_prev), (coord_x, coord_y), (0, 0, 0), 2)
+		#cv2.circle(img, (coord_x, coord_y), 3, (0, 0, 0), -1)
 		coord_x_prev, coord_y_prev = coord_x, coord_y
 		
-	cv2.namedWindow(winname = "Gaze path") 
-	img2 = cv2.resize(img, (683, 384))
-	cv2.imshow("Gaze path", img2)
+	#cv2.namedWindow(winname = "Gaze path") 
+	#img2 = cv2.resize(img, (683, 384))
+	#cv2.imshow("Gaze path", img2)
 	
 	k = cv2.waitKey(0)
 

@@ -18,7 +18,10 @@ if __name__ == "__main__":
 	
 	gaze_data = preproc.preproc()
 	gaze_data = map_to_img.map_to_img(img, gaze_data)
-	#pts = find_fixations.find_fixations(gaze_data)
+	find_fixations.remove_saccades(gaze_data)
+	pts = find_fixations.find_fixations(gaze_data)
+	print("PTS: ", pts)
+	find_fixations.print_fixations(img, pts)
 	
-	#find_fixations.print_points(img, pts)
-	#verify_points.verify_points(pts, password)
+	find_fixations.print_points(img, pts)
+	verify_points.verify_points(pts, password)
