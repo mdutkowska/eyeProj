@@ -1,13 +1,12 @@
-import image_stat
 
-def verify_points(points, password):
+def verify_points(points, areas_array):
 
 	points_x = points[0]
 	points_y = points[1]
 	
-	for pass_digit in range(len(password)):
+	for area in range(len(points_x)):
 	
-		if image_stat.areas_array[password[pass_digit]].is_in_area(points_x[pass_digit], points_y[pass_digit]):
-			print("Digit ", pass_digit, "is correct. ")
+		if areas_array[area].is_in_area(points_x[area], points_y[area]):
+			print("Digit ", area, "is correct. ")
 		else:
-			print("Digit ", pass_digit, "FUCK YOU.")
+			print("Digit ", area, "FUCK YOU.")

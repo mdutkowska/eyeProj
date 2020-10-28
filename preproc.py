@@ -20,8 +20,8 @@ def preproc(log_path="ScreenRecorderPath.txt"):
 
 			splited = line.split(" ")
 			
-			eye_x = -(float(splited[0]))+1
-			eye_y = -(float(splited[1]))+1
+			eye_x = float(splited[0])
+			eye_y = float(splited[1])
 			
 			timestamp = int(splited[2])
 
@@ -42,6 +42,8 @@ def preproc(log_path="ScreenRecorderPath.txt"):
 	#gaze_df.plot.scatter(x = "gaze_x", y = "gaze_y")
 	#plt.show()
 	
+	#print(gaze_df.head(10))
+	
 	gaze_df.drop(gaze_df[gaze_df["gaze_x"] > 1].index, inplace=True)
 	gaze_df.drop(gaze_df[gaze_df["gaze_y"] > 1].index, inplace=True)
 	gaze_df.drop(gaze_df[gaze_df["gaze_x"] < 0].index, inplace=True)
@@ -53,8 +55,6 @@ def preproc(log_path="ScreenRecorderPath.txt"):
 	#plt.show()
 	
 	print("Extracting data finished. ")
-	
-	print("Head: ", gaze_df.head())
 	
 	return gaze_df
 	

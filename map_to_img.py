@@ -33,6 +33,8 @@ def map_to_img(img, gaze_df, res_x = 1366, res_y = 768):
 	
 	k = cv2.waitKey(0)
 	
+	cv2.imwrite("eye_path.jpg", img)	
+	
 	cv2.destroyWindow("Gaze path")
 
 	return pixels_coord

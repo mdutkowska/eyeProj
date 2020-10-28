@@ -7,9 +7,7 @@ from scipy.spatial import distance
 
 n_clusters = 4
 
-
-#fix to find only >100ms fixations?
-def remove_saccades(gaze_data, threshold = 50):
+def remove_saccades(gaze_data, threshold = 30):
 
 	fixations_points = np.empty(0, dtype=int)
 
@@ -50,21 +48,18 @@ def print_fixations(img, fixation_data):
 #SPRAWDZI CZY SIE TIMESTAMPY NIE NACHODZA
 def find_fixations(gaze_data, n_clusters=4):
 
-	gaze_data = remove_saccades(gaze_data)
-	gaze_data = remove_saccades(gaze_data)
-	gaze_data = remove_saccades(gaze_data)
-	gaze_data = remove_saccades(gaze_data)
+	print("Gaze data0 : ", gaze_data)
 
-	gaze_data = gaze_data[:, 0:2]
+	gaze_data = remove_saccades(gaze_data)
+	
 
 	kmeans = KMeans(n_clusters = n_clusters)
 
-	print("Gaze data: ", gaze_data)
+	print("Gaze data2 : ", gaze_data)
 	kmeans.fit(gaze_data)
 	
 	y_km = kmeans.fit_predict(gaze_data)
 	
-	print(y_km)
 	plt.scatter(gaze_data[y_km == 0,0], gaze_data[y_km == 0,1], s=100, c="red", marker=(5,1))
 	plt.scatter(gaze_data[y_km == 1,0], gaze_data[y_km == 1,1], s=100, c="black", marker=(5,1))
 	plt.scatter(gaze_data[y_km == 2,0], gaze_data[y_km == 2,1], s=100, c="blue", marker=(5,1))
@@ -74,8 +69,76 @@ def find_fixations(gaze_data, n_clusters=4):
 	fixation_points = fixation_points.T
 	fixation_points = fixation_points.astype(np.int)
 	
-	plt.scatter(fixation_points[0], fixation_points[1], s=100, c="cyan", marker=(5,1))
-	plt.show()
+	#plt.scatter(fixation_points[0], fixation_points[1], s=100, c="cyan", marker=(5,1))
+	#plt.show()
+	
+	gaze_data = remove_saccades(gaze_data)
+	
+
+	kmeans = KMeans(n_clusters = n_clusters)
+
+	print("Gaze data2 : ", gaze_data)
+	kmeans.fit(gaze_data)
+	
+	y_km = kmeans.fit_predict(gaze_data)
+	
+	plt.scatter(gaze_data[y_km == 0,0], gaze_data[y_km == 0,1], s=100, c="red", marker=(5,1))
+	plt.scatter(gaze_data[y_km == 1,0], gaze_data[y_km == 1,1], s=100, c="black", marker=(5,1))
+	plt.scatter(gaze_data[y_km == 2,0], gaze_data[y_km == 2,1], s=100, c="blue", marker=(5,1))
+	plt.scatter(gaze_data[y_km == 3,0], gaze_data[y_km == 3,1], s=100, c="cyan", marker=(5,1))
+	
+	fixation_points = (kmeans.cluster_centers_)[(kmeans.cluster_centers_)[:, -1].argsort()]
+	fixation_points = fixation_points.T
+	fixation_points = fixation_points.astype(np.int)
+	
+	#plt.scatter(fixation_points[0], fixation_points[1], s=100, c="cyan", marker=(5,1))
+	#plt.show()
+	
+	gaze_data = remove_saccades(gaze_data)
+	
+
+	kmeans = KMeans(n_clusters = n_clusters)
+
+	print("Gaze data2 : ", gaze_data)
+	kmeans.fit(gaze_data)
+	
+	y_km = kmeans.fit_predict(gaze_data)
+	
+	plt.scatter(gaze_data[y_km == 0,0], gaze_data[y_km == 0,1], s=100, c="red", marker=(5,1))
+	plt.scatter(gaze_data[y_km == 1,0], gaze_data[y_km == 1,1], s=100, c="black", marker=(5,1))
+	plt.scatter(gaze_data[y_km == 2,0], gaze_data[y_km == 2,1], s=100, c="blue", marker=(5,1))
+	plt.scatter(gaze_data[y_km == 3,0], gaze_data[y_km == 3,1], s=100, c="cyan", marker=(5,1))
+	
+	fixation_points = (kmeans.cluster_centers_)[(kmeans.cluster_centers_)[:, -1].argsort()]
+	fixation_points = fixation_points.T
+	fixation_points = fixation_points.astype(np.int)
+	
+	#plt.scatter(fixation_points[0], fixation_points[1], s=100, c="cyan", marker=(5,1))
+	#plt.show()
+	
+	gaze_data = remove_saccades(gaze_data)
+	
+
+	kmeans = KMeans(n_clusters = n_clusters)
+
+	print("Gaze data2 : ", gaze_data)
+	kmeans.fit(gaze_data)
+	
+	y_km = kmeans.fit_predict(gaze_data)
+	
+	plt.scatter(gaze_data[y_km == 0,0], gaze_data[y_km == 0,1], s=100, c="red", marker=(5,1))
+	plt.scatter(gaze_data[y_km == 1,0], gaze_data[y_km == 1,1], s=100, c="black", marker=(5,1))
+	plt.scatter(gaze_data[y_km == 2,0], gaze_data[y_km == 2,1], s=100, c="blue", marker=(5,1))
+	plt.scatter(gaze_data[y_km == 3,0], gaze_data[y_km == 3,1], s=100, c="cyan", marker=(5,1))
+	
+	fixation_points = (kmeans.cluster_centers_)[(kmeans.cluster_centers_)[:, -1].argsort()]
+	fixation_points = fixation_points.T
+	fixation_points = fixation_points.astype(np.int)
+	
+	#plt.scatter(fixation_points[0], fixation_points[1], s=100, c="cyan", marker=(5,1))
+	#plt.show()
+	
+	
 	
 	return fixation_points
 	
@@ -88,13 +151,14 @@ def print_points(img, points):
 	print("Y ", points_y)
 
 	for point in range(len(points_x)):
-		cv2.circle(img, (points_x[point], points_y[point]), 5, (255, 0, 255), -1)
+		cv2.rectangle(img, (points_x[point], points_y[point]), ((points_x[point]+15), (points_y[point]+15)), (0, 255, 0), -1)
 		
 	img2 = cv2.resize(img, (683, 384))
 	cv2.imshow("winname", img2)
 	k = cv2.waitKey(0)
 		
-
+	cv2.imwrite("ver_points.jpg", img)
+		
 if __name__ == "__main__":
 	find_fixations();
 	k = cv2.waitKey(0)
